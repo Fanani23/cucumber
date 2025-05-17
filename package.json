@@ -1,0 +1,16 @@
+{
+  "name": "cypress-saucedemo-test",
+  "version": "1.0.0",
+  "description": "Cypress automation test for SauceDemo website",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "cypress:open": "cypress open"
+  },
+  "dependencies": {
+    "cypress": "^13.6.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.0",
+    "@cypress/webpack-preprocessor": "^6.0.0"
+  }
+}
