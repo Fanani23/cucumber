@@ -43,7 +43,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
   e2e: {
     baseUrl: "https://www.saucedemo.com",
-    specPattern: "cypress/e2e/features/*.feature",
+    specPattern: "cypress/e2e/features/**/*.feature",
     supportFile: false,
     setupNodeEvents,
   },
