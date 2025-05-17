@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-const createBundler = require("@cypress/webpack-preprocessor").default;
+const createBundler = require("@cypress/webpack-preprocessor");
 const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
 const {
   addCucumberPreprocessorPlugin,
@@ -12,11 +12,28 @@ async function setupNodeEvents(on, config) {
   on(
     "file:preprocessor",
     createBundler({
-      plugins: [
-        new webpack.DefinePlugin({
-          CYPRESS_ENV: JSON.stringify(config.env),
-        }),
-      ],
+      webpackOptions: {
+        resolve: {
+          extensions: [".ts", ".js"],
+        },
+        module: {
+          rules: [
+            {
+              test: /\.feature$/,
+              use: [
+                {
+                  loader: "@badeball/cypress-cucumber-preprocessor/loader",
+                },
+              ],
+            },
+          ],
+        },
+        plugins: [
+          new webpack.DefinePlugin({
+            CYPRESS_ENV: JSON.stringify(config.env),
+          }),
+        ],
+      },
     })
   );
 
@@ -27,7 +44,6 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "https://www.saucedemo.com",
     specPattern: "cypress/e2e/features/*.feature",
-    // supportFile: "cypress/support/e2e.js",
     supportFile: false,
     setupNodeEvents,
   },
